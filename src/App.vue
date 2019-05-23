@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+  <h2>一、你现在可以做下面的事情</h2>
+    <ol>
+      <todo-item
+              v-for="(item,index) of todolist"
+              :key="index"
+              :content="item"
+              :index="index"
+              @add="HandleAdd"
+      ></todo-item>
+    </ol>
+  <h2>二、直接在上面点击，选择你将要做的事情</h2>
+    <ol>
+      <li  v-for="(item,index) of selectList" :key="index">{{item}}</li>
+    </ol>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'app',
-  components: {
-    HelloWorld
-  }
+  import TodoItem from "./components/TodoItem"
+  export default {
+    components:{
+      'todo-item':TodoItem,
+    },
+    data(){
+    return{
+      todolist:["吃饭","睡觉","打豆豆","聊QQ","聊微信"],
+      selectList:[],
+      current:""//当前选中的index
+    }
+  },
+    methods:{
+      HandleAdd(index){
+        this.selectList.push(this.todolist[index])
+      }
+    }
 }
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
