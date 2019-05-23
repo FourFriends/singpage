@@ -1,6 +1,13 @@
 <template>
   <div>
-  <h2>一、你现在可以做下面的事情</h2>
+  <h2>一、请增加你的日程或者从下面进行选择：</h2>
+    <p>请选择日期：<input type="date" v-model="date"/></p>
+    <p>
+      请输入你计划做的事情：<input type="text" v-model="msg"/>
+      &nbsp;&nbsp;
+      <button type="button" @click="AddList">提交</button>
+    </p>
+
     <ol>
       <todo-item
               v-for="(item,index) of todolist"
@@ -25,14 +32,23 @@
     },
     data(){
     return{
-      todolist:["吃饭","睡觉","打豆豆","聊QQ","聊微信"],
+      todolist:[],
       selectList:[],
-      current:""//当前选中的index
+      msg:"",
+      date:"2019-05-23"
     }
   },
     methods:{
       HandleAdd(index){
-        this.selectList.push(this.todolist[index])
+        var str = this.date + " " + this.todolist[index];
+        this.selectList.push(str);
+      },
+      AddList()
+      {
+        if(this.msg === '') return;
+        var str = this.date + " " + this.msg;
+        this.selectList.push(str);
+        this.msg = '';
       }
     }
 }
