@@ -9,26 +9,34 @@
     </p>
 
     <ol>
-      <todo-item
+      <handle-add
               v-for="(item,index) of todolist"
               :key="index"
               :content="item"
               :index="index"
               @add="HandleAdd"
-      ></todo-item>
+      ></handle-add>
     </ol>
   <h2>二、直接在上面点击，选择你将要做的事情</h2>
     <ol>
-      <li  v-for="(item,index) of selectList" :key="index">{{item}}</li>
+        <handle-delete
+                v-for="(item,index) of selectList"
+                :key="index"
+                :content="item"
+                :index="index"
+                @delete="HandleDelete"
+        ></handle-delete>
     </ol>
   </div>
 </template>
 
 <script>
-  import TodoItem from "./components/TodoItem"
+  import HandleAdd from "./components/HandleAdd"
+  import HandleDelete from "./components/HandleDelete"
   export default {
     components:{
-      'todo-item':TodoItem,
+      'handle-add':HandleAdd,
+      'handle-delete':HandleDelete,
     },
     data(){
     return{
@@ -49,7 +57,10 @@
         var str = this.date + " " + this.msg;
         this.selectList.push(str);
         this.msg = '';
-      }
+      },
+      HandleDelete(index){
+          this.selectList.splice(index,1);
+      },
     }
 }
 </script>
